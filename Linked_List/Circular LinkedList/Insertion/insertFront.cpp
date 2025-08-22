@@ -20,14 +20,14 @@ class CircularLL{
         head=tail=nullptr;
     }
   void push_front(int val)  {
-      Node*newNode = new Node(val);
-      if(head==nullptr){
-          head=tail=newNode;
-          tail->next=newNode;
-      }else{
-          newNode->next= head;
-         head =  newNode;
-         tail->next= head;
+      Node*newNode = new Node(val);                     //if head is not present
+      if(head==nullptr){                      //if(tail==nullptr){
+          head=tail=newNode;                      //   tail=newNode;   
+          tail->next=newNode;                      //  tail->next = newNode;
+      }else{                                    //     }else{
+          newNode->next= head;             //                 newNode->next = tail->next;
+         head =  newNode;                      //             tail->next = newNode;
+         tail->next= head;                         //             }
       }
   }
   
