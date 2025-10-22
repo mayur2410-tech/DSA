@@ -14,7 +14,7 @@ int main() {
         int curr = arr[i];
         int prev = i-1;
         while(prev>=0 && arr[prev]>curr){
-            swap(arr[prev],arr[prev+1]);
+            swap(arr[prev],arr[prev+1]);   // or we can assign like this arr[prev+1]=arr[prev]
             prev--;
         }
         arr[prev+1]= curr;
