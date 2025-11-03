@@ -6,70 +6,142 @@
 // In the example you provided, the `balance` variable is defined within the `BankAccount` function. This means that it is not accessible from outside the function. However,
 //  the methods `checkBalance`, `deposit`, and `withdraw` are also defined within the same function and have access to the `balance` variable because they are closures.= 0; // private variable
 
-function BankAccount(amount) {
-    let balance = amount
+// function BankAccount(amount) {
+//     let balance = amount
     
-    function validateAmount(amountToValidate) {
-        return amountToValidate > 0 && typeof amountToValidate === 'number'
-    }
+//     function validateAmount(amountToValidate) {
+//         return amountToValidate > 0 && typeof amountToValidate === 'number'
+//     }
 
 
-    return {
-        checkBalance: function() {
-          return balance
-        },
-        deposit: function(depositAmount) {
-          if(validateAmount(depositAmount)) {
-            balance = balance + depositAmount
-          }else{
-            console.log("Plz enter valid  amount")
-          }
+//     return {
+//         checkBalance: function() {
+//           return balance
+//         },
+//         deposit: function(depositAmount) {
+//           if(validateAmount(depositAmount)) {
+//             balance = balance + depositAmount
+//           }else{
+//             console.log("Plz enter valid  amount")
+//           }
           
-        },
-        withdraw: function(withdrawAmount) {
-             if(validateAmount(withdrawAmount)) {
-                balance = balance - withdrawAmount
-             }else{
-            console.log("Plz enter valid  amount")
-          }
-        },
+//         },
+//         withdraw: function(withdrawAmount) {
+//              if(validateAmount(withdrawAmount)) {
+//                 balance = balance - withdrawAmount
+//              }else{
+//             console.log("Plz enter valid  amount")
+//           }
+//         },
         
+//     }
+// }
+
+// const user1 = BankAccount(1000)
+// // console.log(user1.checkBalance()) 
+// user1.deposit(3000)
+// user1.withdraw(4100)
+// console.log(user1.checkBalance())
+
+
+
+// // after es6 we can use class and # to make varable private in js
+// class BankAccountClass {
+//     #balance; // private variable   
+//     constructor(amount) {
+//         this.#balance = amount
+//     }
+//     validateAmount(amountToValidate) {
+//         return amountToValidate > 0 && typeof amountToValidate === 'number'
+//     }
+//     checkBalance() {
+//         return this.#balance
+//     }
+//     deposit(depositAmount) {
+//         if(this.validateAmount(depositAmount)) {
+//             this.#balance = this.#balance + depositAmount
+//           }else{
+//             console.log("Plz enter valid  amount")
+//           }
+//     }
+//     withdraw(withdrawAmount) {
+//         if(this.validateAmount(withdrawAmount)) {
+//             this.#balance = this.#balance - withdrawAmount
+//          }
+//             else{
+//             console.log("Plz enter valid  amount")
+//             }
+//     }
+// }
+
+
+class UserProfile{
+    #email;
+    #password;
+    #loginAttempts;
+    #flag
+
+     username;
+
+    constructor(username,email,password){   //it is used to add varable to the using this keyword 
+        this.username = username;
+        this.#email = email;
+        this.#password = this.#hasedPassword(password);
+        this.#loginAttempts = 0;
+        this.#flag = false;
+    }
+
+   #hasedPassword(password){
+    
+       return `hashed pass is ${password}@@@`
+       
+   }
+   getEmail(){
+    return this.#email;
+   }
+
+   updatePassword(newPassword,oldPassword){
+    if(this.#password === this.#hasedPassword(oldPassword)){
+        this.#password = this.#hasedPassword(newPassword);
+       return "pass upadate successfully"
+    }else{
+        return "Incorrect password";
+    }
+   }
+
+   login(user,password){
+    if(this.#loginAttempts >= 5){
+        return "account locked for 24 hours";
+    }
+
+    if(user === this.username || user === this.#email){
+        if(this.#hasedPassword(password) === this.#password){
+            this.#flag = true;
+            return "login successfull";
+        }else{
+             this.#loginAttempts++; 
+            return "incorrect password";
+        }
+        }else{
+            return "user not exist";
+        }
+
+    }
+
+    logout(){
+        if(this.#flag === true){
+            this.#loginAttempts = 0;
+            return "logout successfull";
+        }else{
+            return "user not logged in";
+        }
     }
 }
-
-const user1 = BankAccount(1000)
-// console.log(user1.checkBalance()) 
-user1.deposit(3000)
-user1.withdraw(4100)
-console.log(user1.checkBalance())
+const u1 = new UserProfile("commandomw","m@gmail.com","pass@123");
+// console.log(u1.getEmail());
+console.log(u1.updatePassword("newpass@123","pass@123"));
+console.log(u1.logout())
 
 
 
-// after es6 we can use class and # to make varable private in js
-class BankAccountClass {
-    #balance; // private variable   
-    constructor(amount) {
-        this.#balance = amount
-    }
-    validateAmount(amountToValidate) {
-        return amountToValidate > 0 && typeof amountToValidate === 'number'
-    }
-    checkBalance() {
-        return this.#balance
-    }
-    deposit(depositAmount) {
-        if(this.validateAmount(depositAmount)) {
-            this.#balance = this.#balance + depositAmount
-          }else{
-            console.log("Plz enter valid  amount")
-          }
-    }
-    withdraw(withdrawAmount) {
-        if(this.validateAmount(withdrawAmount)) {
-            this.#balance = this.#balance - withdrawAmount
-         }
-            else{
-            console.log("Plz enter valid  amount")
-            }
-    }
-}
+
