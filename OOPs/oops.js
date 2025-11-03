@@ -75,73 +75,118 @@
 // }
 
 
-class UserProfile{
-    #email;
-    #password;
-    #loginAttempts;
-    #flag
+// class UserProfile{
+//     #email;
+//     #password;
+//     #loginAttempts;
+//     #flag
 
-     username;
+//      username;
 
-    constructor(username,email,password){   //it is used to add varable to the using this keyword 
-        this.username = username;
-        this.#email = email;
-        this.#password = this.#hasedPassword(password);
-        this.#loginAttempts = 0;
-        this.#flag = false;
-    }
+//     constructor(username,email,password){   //it is used to add varable to the using this keyword 
+//         this.username = username;
+//         this.#email = email;
+//         this.#password = this.#hasedPassword(password);
+//         this.#loginAttempts = 0;
+//         this.#flag = false;
+//     }
 
-   #hasedPassword(password){
+//    #hasedPassword(password){
     
-       return `hashed pass is ${password}@@@`
+//        return `hashed pass is ${password}@@@`
        
-   }
-   getEmail(){
-    return this.#email;
-   }
+//    }
+//    getEmail(){
+//     return this.#email;
+//    }
 
-   updatePassword(newPassword,oldPassword){
-    if(this.#password === this.#hasedPassword(oldPassword)){
-        this.#password = this.#hasedPassword(newPassword);
-       return "pass upadate successfully"
-    }else{
-        return "Incorrect password";
+//    updatePassword(newPassword,oldPassword){
+//     if(this.#password === this.#hasedPassword(oldPassword)){
+//         this.#password = this.#hasedPassword(newPassword);
+//        return "pass upadate successfully"
+//     }else{
+//         return "Incorrect password";
+//     }
+//    }
+
+//    login(user,password){
+//     if(this.#loginAttempts >= 5){
+//         return "account locked for 24 hours";
+//     }
+
+//     if(user === this.username || user === this.#email){
+//         if(this.#hasedPassword(password) === this.#password){
+//             this.#flag = true;
+//             return "login successfull";
+//         }else{
+//              this.#loginAttempts++; 
+//             return "incorrect password";
+//         }
+//         }else{
+//             return "user not exist";
+//         }
+
+//     }
+
+//     logout(){
+//         if(this.#flag === true){
+//             this.#loginAttempts = 0;
+//             return "logout successfull";
+//         }else{
+//             return "user not logged in";
+//         }
+//     }
+// }
+// const u1 = new UserProfile("commandomw","m@gmail.com","pass@123");
+// // console.log(u1.getEmail());
+// console.log(u1.updatePassword("newpass@123","pass@123"));
+// console.log(u1.logout())
+
+
+
+// Inheritance
+
+class Animal{
+    #isAlive;
+    constructor(name, species){
+        this.name = name;
+        this.species = species;
+        this.#isAlive = true;
+    };
+    eat(food){
+        return `${this.name} is eating ${food}.`;
     }
-   }
+    sleep(hours){
+        return `${this.name} is sleeping for ${hours} hours.`;
+    }
+    makeSound(){
+        return `${this.name} makes a sound.`;
+    }
+    getInfo(){
+        return `Name: ${this.name}, Species: ${this.species}, Alive: ${this.#isAlive}`;
+    };
+};
 
-   login(user,password){
-    if(this.#loginAttempts >= 5){
-        return "account locked for 24 hours";
+class Dog extends Animal{
+    #loyalityLevel;
+    constructor(name,breed){
+        super(name,"German Shephard");                   //super is used to call parent class constructor
+        this.breed = breed;
+        this.#loyalityLevel = 10;
+    }
+    makeSound(){
+        return `${this.name} barks. Woof Woof!`;
     }
 
-    if(user === this.username || user === this.#email){
-        if(this.#hasedPassword(password) === this.#password){
-            this.#flag = true;
-            return "login successfull";
-        }else{
-             this.#loginAttempts++; 
-            return "incorrect password";
-        }
-        }else{
-            return "user not exist";
-        }
-
+    wagTail(){
+        return `${this.name} is wagging its tail!`;
     }
-
-    logout(){
-        if(this.#flag === true){
-            this.#loginAttempts = 0;
-            return "logout successfull";
-        }else{
-            return "user not logged in";
-        }
+    getInfo(){
+        return `${super.getInfo()}, Breed: ${this.breed}`    // super is used to call parent class method and access parent class properties and new properties
     }
 }
-const u1 = new UserProfile("commandomw","m@gmail.com","pass@123");
-// console.log(u1.getEmail());
-console.log(u1.updatePassword("newpass@123","pass@123"));
-console.log(u1.logout())
 
 
-
-
+const dog1 = new Dog("JeevanDog");
+console.log(dog1.eat("meat"));
+console.log(dog1.makeSound());
