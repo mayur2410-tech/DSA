@@ -146,47 +146,124 @@
 
 // Inheritance
 
-class Animal{
-    #isAlive;
-    constructor(name, species){
-        this.name = name;
-        this.species = species;
-        this.#isAlive = true;
-    };
-    eat(food){
-        return `${this.name} is eating ${food}.`;
-    }
-    sleep(hours){
-        return `${this.name} is sleeping for ${hours} hours.`;
-    }
-    makeSound(){
-        return `${this.name} makes a sound.`;
-    }
-    getInfo(){
-        return `Name: ${this.name}, Species: ${this.species}, Alive: ${this.#isAlive}`;
-    };
-};
+// class Animal{
+//     #isAlive;
+//     constructor(name, species){
+//         this.name = name;
+//         this.species = species;
+//         this.#isAlive = true;
+//     };
+//     eat(food){
+//         return `${this.name} is eating ${food}.`;
+//     }
+//     sleep(hours){
+//         return `${this.name} is sleeping for ${hours} hours.`;
+//     }
+//     makeSound(){
+//         return `${this.name} makes a sound.`;
+//     }
+//     getInfo(){
+//         return `Name: ${this.name}, Species: ${this.species}, Alive: ${this.#isAlive}`;
+//     };
+// };
 
-class Dog extends Animal{
-    #loyalityLevel;
-    constructor(name,breed){
-        super(name,"German Shephard");                   //super is used to call parent class constructor
-        this.breed = breed;
-        this.#loyalityLevel = 10;
-    }
-    makeSound(){
-        return `${this.name} barks. Woof Woof!`;
-    }
+// class Dog extends Animal{
+//     #loyalityLevel;
+//     constructor(name,breed){
+//         super(name,"German Shephard");                   //super is used to call parent class constructor
+//         this.breed = breed;
+//         this.#loyalityLevel = 10;
+//     }
+//     makeSound(){
+//         return `${this.name} barks. Woof Woof!`;
+//     }
 
-    wagTail(){
-        return `${this.name} is wagging its tail!`;
-    }
-    getInfo(){
-        return `${super.getInfo()}, Breed: ${this.breed}`    // super is used to call parent class method and access parent class properties and new properties
+//     wagTail(){
+//         return `${this.name} is wagging its tail!`;
+//     }
+//     getInfo(){
+//         return `${super.getInfo()}, Breed: ${this.breed}`    // super is used to call parent class method and access parent class properties and new properties
+//     }
+// }
+
+
+// const dog1 = new Dog("JeevanDog");
+// console.log(dog1.eat("meat"));
+// console.log(dog1.makeSound());
+
+
+// class Person{
+//     name;
+//     age;
+//     email;
+//     constructor(name,age,email){
+//         this.name = name;
+//         this.age =age;
+//         this.email=email
+//     }
+
+//     getPersonInfo(){
+//         return `Name: ${this.name}, Age: ${this.age}, Email: ${this.email}`;
+//     }
+
+//     getIntroduce(){
+//         return `Hello, my name is ${this.name}, I'm ${this.age} years old. You can reach me at ${this.email}.`;
+//     }
+// }
+
+// class Employee extends Person{
+//     employeeId;
+//     department;
+//     #salary;
+//      constructor(name,age,email,employeeId,department){
+//         super(name,age,email);
+//         this.employeeId = employeeId;
+//         this.department = department;
+//         this.#salary = salary;
+//      }
+
+//      setSalary(newSalary){
+//         if(newSalary > 0){
+//             this.#salary = newSalary;
+//         }else{
+//             console.log("Invalid salary amount.");
+//         }
+//      }
+
+//      getSalary(){
+//         return this.#salary;
+//      }
+
+//      work(){
+//         return `${this.name} is working in the ${this.department} department.`;
+//      }
+
+//      getEmployeeInfo(){
+//         return `${super.getPersonInfo()}, Employee ID: ${this.employeeId}, Department: ${this.department}`;
+//      }
+//      introduce(){
+//         return `${super.getIntroduce()} working in the ${this.department} department`;
+//      }
+// }
+
+
+// polymorphism
+
+
+class Calculator{
+    add(...numbers){
+        if(numbers.length === 0){
+            return "enter at least one number to add";
+        }
+        if(numbers.length === 1 && typeof numbers[0] === "number"){
+            return numbers[0];
+        }
+        if(numbers.length === 2){
+            return numbers[0] + numbers[1];
+        }
+        return numbers.reduce((sum, num) => sum + num, 0);
     }
 }
 
-
-const dog1 = new Dog("JeevanDog");
-console.log(dog1.eat("meat"));
-console.log(dog1.makeSound());
+const calc = new Calculator();
+console.log(calc.add(6.5, 3.9,7)); // Output: 10
