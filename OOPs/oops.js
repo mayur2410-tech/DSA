@@ -250,20 +250,193 @@
 // polymorphism
 
 
-class Calculator{
-    add(...numbers){
-        if(numbers.length === 0){
-            return "enter at least one number to add";
+// class Calculator{
+//     add(...numbers){
+//         if(numbers.length === 0){
+//             return "enter at least one number to add";
+//         }
+//         if(numbers.length === 1 && typeof numbers[0] === "number"){
+//             return numbers[0];
+//         }
+//         if(numbers.length === 2){
+//             return numbers[0] + numbers[1];
+//         }
+//         return numbers.reduce((sum, num) => sum + num, 0);
+//     }
+// }
+
+// const calc = new Calculator();
+// console.log(calc.add(6.5, 3.9,7)); // Output: 10
+
+// class DebitCard{
+//     pay(){
+//         console.log("paid by debit card")
+//     }
+// }
+
+// class CreditCard{
+//     pay(){
+//         console.log("paid by credit card")
+//     }   
+// }
+
+// class UPI{
+//     pay(){
+//         console.log("paid by UPI")
+//     }   
+// }
+// function payNow(paymentMethod){
+//     paymentMethod.pay();
+// }
+
+// const debit = new DebitCard();
+// const credit = new CreditCard();
+// const upi = new UPI();
+
+// payNow(debit);
+// // payNow(credit);
+// // payNow(upi);
+
+
+class Media {
+    #title;
+    #artist;
+    #duration;
+    #filePath;
+    #playCount;
+    #lastPlayed;
+    #isPlaying;
+    #currentPosition;
+    constructor(title,artist,duration,filePath) {
+        this.#title = title;
+        this.#artist = artist;
+        this.#duration = duration;
+        this.#filePath = filePath;
+        this.#playCount = 0;
+        this.#lastPlayed = null;
+        this.#isPlaying = false;
+        this.#currentPosition = 0;
+}
+
+getTitle(){
+    return this.#title;
+}
+getArtist(){
+        return this.#artist;
+}
+getDuration(){
+        return this.#duration;
+}
+getFilePath(){
+        return this.#filePath;
+}
+getPlayCount(){
+        return this.#playCount; 
+}
+getLastPlayed(){
+        return this.#lastPlayed;    
+}
+isPlaying(){
+        return this.#isPlaying;    
+}
+
+setCurrentPlaying(bool){
+    this.#isPlaying = bool;
+}
+getCurrentPosition(){
+        return this.#currentPosition;
+}
+setCurrentPosition(position){
+        if(position >=0 && position <= this.#duration){
+            this.#currentPosition = position;
         }
-        if(numbers.length === 1 && typeof numbers[0] === "number"){
-            return numbers[0];
-        }
-        if(numbers.length === 2){
-            return numbers[0] + numbers[1];
-        }
-        return numbers.reduce((sum, num) => sum + num, 0);
+}
+
+updatePlayStatics(){
+    // this.#lastPlayed = new Date.now();
+    this.#playCount++;
+}
+
+ play() {
+        throw new Error('play() must be implemented by subclass');
+    }
+    
+    pause() {
+        throw new Error('pause() must be implemented by subclass');
+    }
+    
+    stop() {
+        throw new Error('stop() must be implemented by subclass');
+    }
+    
+    getMediaInfo() {
+        throw new Error('getMediaInfo() must be implemented by subclass');
+    }
+
+    getFormattedDuaration(){
+        const minutes = Math.floor(this.#duration / 60);
+        const seconds = this.#duration % 60;
+        return `${minutes}m : ${seconds.toString().padStart(2, '0')}s`;
+    }
+
+    getProgress() {
+        if (this.#duration === 0) return 0;
+        return (this.#currentPosition / this.#duration) * 100;
+    }
+
+
+}
+
+class AudioFile extends Media {
+    #format;
+    #bitrate;
+    #volume;
+    constructor(title, artist, duration, filePath, format, bitrate) {
+        super(title, artist, duration, filePath);
+        this.#format = format;
+        this.#bitrate = bitrate; // default bitrate
+        this.#volume = 50; // default volume
+}
+    play() {
+        this.setCurrentPlaying(true);
+        this.updatePlayStatics();
+        this.setCurrentPosition(0);
+        return `Playing audio: ${this.getTitle()} by ${this.getArtist()}`
+        
+        
+    }
+    pause(){
+        this.setCurrentPlaying(false)
+        return `Audio: ${this.getTitle()} paused at ${this.getCurrentPosition()}s`
+    }
+    stop(){
+        this.setCurrentPosition(0);
+        this.setCurrentPlaying(false);
+        return `Audio: ${this.getTitle()} stopped.`;
+    }
+    getMediaInfo() {
+        return {
+            title: this.getTitle(),
+            artist: this.getArtist(),
+            type: 'Audio',
+            format: this.#format,
+            bitrate: `${this.#bitrate}kbps`,
+            duration: this.getFormattedDuaration(),
+            playCount: this.getPlayCount(),
+            lastPlayed: this.getLastPlayed()
+        };
+    }
+    setVolume(level){
+        this.#volume = Math.max(0, Math.min(100, level));
+        return `Volume set to ${this.#volume}`;
     }
 }
 
-const calc = new Calculator();
-console.log(calc.add(6.5, 3.9,7)); // Output: 10
+const music = new AudioFile("Man meri Jan","Arjit Singh",240,"/path/to/song1.mp3","mp3",320);
+console.log(music.play());
+    console.log(music.pause());
+    console.log(music.setVolume(8));
+    
+    console.log(music.getMediaInfo());
+
+// console.log(music.stop());
