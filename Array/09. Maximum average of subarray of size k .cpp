@@ -8,7 +8,7 @@ int main() {
     int n = arr.size();
     int k =4;
     int sum =0;
-    for(int i =0 ; i < k ; i++){
+    for(int i =0 ; i < k ; i++){   // in this they given the fized size subarray
         sum = sum + arr[i];
     }
     int maxSum = sum;
